@@ -940,6 +940,7 @@ button {
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   transition: transform var(--transition-base);
+  display: block !important; /* Ensure cards are visible by default */
 }
 
 .collection-card.hidden {
