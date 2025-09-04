@@ -866,10 +866,12 @@
         grid.appendChild(card);
       });
       
-      console.log(`Added ${data.length} collection items`);
+      console.log(`Loaded ${data.length} collection items`);
       
-      // Initialize filter functionality
-      initCollectionFilters();
+      // Initialize filter functionality with delay to ensure DOM is ready
+      setTimeout(() => {
+        initCollectionFilters();
+      }, 100);
       
       // Re-initialize animations for new elements
       if (window.animationObserver) {
@@ -881,30 +883,52 @@
     
     function initCollectionFilters() {
       const filterTabs = document.querySelectorAll('.filter-tab');
-      const collectionCards = document.querySelectorAll('.collection-card');
+      
+      if (filterTabs.length === 0) {
+        console.warn('No filter tabs found');
+        return;
+      }
       
       filterTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // Remove active class from all tabs
-          filterTabs.forEach(t => {
-            t.classList.remove('active');
-            t.setAttribute('aria-selected', 'false');
-          });
-          
-          // Add active class to clicked tab
-          tab.classList.add('active');
-          tab.setAttribute('aria-selected', 'true');
-          
-          const filter = tab.dataset.filter;
-          
-          // Filter collections
-          collectionCards.forEach(card => {
-            const tags = card.dataset.tags.split(' ');
-            const shouldShow = filter === 'all' || tags.includes(filter);
-            
-            card.style.display = shouldShow ? '' : 'none';
-          });
-        });
+        // Remove any existing event listeners
+        tab.removeEventListener('click', handleFilterClick);
+        
+        // Add new event listener
+        tab.addEventListener('click', handleFilterClick);
+      });
+    }
+    
+    function handleFilterClick(e) {
+      const clickedTab = e.currentTarget;
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      
+      // Add active class to clicked tab
+      clickedTab.classList.add('active');
+      clickedTab.setAttribute('aria-selected', 'true');
+      
+      const filter = clickedTab.dataset.filter;
+      
+      // Get fresh collection cards (in case they were re-rendered)
+      const collectionCards = document.querySelectorAll('.collection-card');
+      
+      // Filter collections
+      collectionCards.forEach(card => {
+        const tags = card.dataset.tags ? card.dataset.tags.split(' ') : [];
+        const shouldShow = filter === 'all' || tags.includes(filter);
+        
+        // Remove both classes first
+        card.classList.remove('hidden', 'visible');
+        
+        if (shouldShow) {
+          card.classList.add('visible');
+        } else {
+          card.classList.add('hidden');
+        }
       });
     }
     
@@ -938,6 +962,9 @@
         currentYearSpan.textContent = new Date().getFullYear();
       }
       
+      // Load collections immediately
+      loadCollections();
+      
       // Initialize components
       initMobileMenu();
       initSmoothScrolling();
@@ -945,12 +972,15 @@
       // Load gallery
       loadGalleryManifest(loadGallery);
       
-      // Load collections
-      loadCollections();
       
       // Gallery navigation
       galleryNext?.addEventListener('click', nextSlide);
       galleryPrev?.addEventListener('click', prevSlide);
+      
+      // Initialize filters after everything is loaded
+      setTimeout(() => {
+        initCollectionFilters();
+      }, 1000);
       
       // Auto-scroll gallery (optional)
       setInterval(() => {

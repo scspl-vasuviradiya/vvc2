@@ -4,15 +4,18 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is a **static website** for Vivah Villa Collection, a premium wedding attire rental business based in Rajkot, Gujarat. The site is built with vanilla HTML, CSS, and JavaScript, designed as a single-page application with smooth scrolling navigation.
+This is a **modern responsive website** for Vivah Villa Collection, a premium wedding attire rental business based in Rajkot, Gujarat. The site features a completely redesigned interface with modern HTML5, advanced CSS Grid/Flexbox layouts, and enhanced JavaScript functionality for optimal user experience across all devices.
 
 **Live URL**: https://vivahvilla.in
 
 ## Technology Stack
 
-- **Frontend**: Pure HTML5, CSS3, JavaScript (ES6+)
-- **Libraries**: jQuery 3.7.1, Bootstrap 5.3.2, Font Awesome 4.7
-- **SEO**: Schema.org structured data, sitemap.xml, robots.txt
+- **Frontend**: Modern HTML5, CSS3 with Grid/Flexbox, JavaScript ES6+
+- **Typography**: Google Fonts (Inter + Playfair Display)
+- **Icons**: Font Awesome 6.4.0
+- **Animations**: CSS transitions with Intersection Observer API
+- **SEO**: Enhanced Schema.org structured data, sitemap.xml, robots.txt
+- **Responsive**: Mobile-first design with advanced breakpoint system
 - **Hosting**: Static site (no build process required)
 
 ## Development Commands

@@ -881,6 +881,8 @@ button {
 .collections-section {
   padding: var(--space-20) 0;
   background: var(--bg-gradient);
+  min-height: auto;
+  overflow: visible;
 }
 
 .filter-tabs {
@@ -938,6 +940,14 @@ button {
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   transition: transform var(--transition-base);
+}
+
+.collection-card.hidden {
+  display: none !important;
+}
+
+.collection-card.visible {
+  display: block !important;
 }
 
 .collection-card:hover {
