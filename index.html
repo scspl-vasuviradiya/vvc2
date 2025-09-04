@@ -753,47 +753,130 @@
       loadGalleryManifest(loadGallery);
     }
     
+    // Fallback collections data for direct HTML file opening
+    const fallbackCollections = [
+      {
+        "tags": ["men", "Indowestern"],
+        "img": "img/collections/men-Indowestern-1.jpg",
+        "alt": "Classic Navy Indowestern - Men's tuxedo in navy",
+        "title": "Classic Navy Indowestern",
+        "desc": "Tailored fit • 2-piece",
+        "price": "₹1999/day"
+      },
+      {
+        "tags": ["men", "Indowestern"],
+        "img": "img/collections/men-Indowestern-3.jpg",
+        "alt": "Classic Navy Indowestern - Men's tuxedo in navy",
+        "title": "Classic Navy Indowestern",
+        "desc": "Tailored fit • 2-piece",
+        "price": "₹1999/day"
+      },
+      {
+        "tags": ["men", "sherwani"],
+        "img": "img/collections/men-sherwani-1.jpg",
+        "alt": "Regal Cream Sherwani - Men's cream sherwani",
+        "title": "Regal Cream Sherwani",
+        "desc": "Zari work • Dupatta",
+        "price": "₹9999/day"
+      },
+      {
+        "tags": ["women", "lehenga"],
+        "img": "img/collections/women-lehenga-1.jpg",
+        "alt": "Elegant Red Lehenga - Bridal lehenga with gold work",
+        "title": "Elegant Red Lehenga",
+        "desc": "Bridal collection • Heavy work",
+        "price": "₹15999/day"
+      },
+      {
+        "tags": ["women", "lehenga"],
+        "img": "img/collections/women-lehenga-2.jpg",
+        "alt": "Pink Designer Lehenga - Contemporary lehenga design",
+        "title": "Pink Designer Lehenga",
+        "desc": "Designer piece • Modern cut",
+        "price": "₹12999/day"
+      },
+      {
+        "tags": ["women", "choli"],
+        "img": "img/collections/women-choli-1.jpg",
+        "alt": "Traditional Choli - Classic Indian choli",
+        "title": "Traditional Choli",
+        "desc": "Traditional design • Comfortable fit",
+        "price": "₹5999/day"
+      }
+    ];
+    
     // Collections functionality
     function loadCollections() {
       fetch('collections.json')
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
-          const grid = document.getElementById('collectionsGrid');
-          if (!grid) return;
-          
-          grid.innerHTML = '';
-          
-          data.forEach((item, index) => {
-            const tags = item.tags.join(' ');
-            const card = document.createElement('div');
-            card.className = 'collection-card';
-            card.setAttribute('data-tags', tags);
-            card.setAttribute('data-anim', 'fade-up');
-            card.style.setProperty('--d', `${index * 100 + 200}ms`);
-            
-            card.innerHTML = `
-              <div class="collection-image">
-                <img src="${item.img}" alt="${item.alt}" loading="lazy">
-                <div class="collection-overlay">
-                  <button class="collection-btn">View Details</button>
-                </div>
-              </div>
-              <div class="collection-content">
-                <h3 class="collection-title">${item.title}</h3>
-                <p class="collection-description">${item.desc}</p>
-                <div class="collection-price">${item.price}</div>
-              </div>
-            `;
-            
-            grid.appendChild(card);
-          });
-          
-          // Initialize filter functionality
-          initCollectionFilters();
+          console.log('Collections data loaded from JSON:', data);
+          displayCollections(data);
         })
         .catch(error => {
-          console.error('Error loading collections:', error);
+          console.warn('Could not fetch collections.json, using fallback data:', error.message);
+          // Use fallback data when fetch fails (e.g., when opening HTML directly)
+          displayCollections(fallbackCollections);
         });
+    }
+    
+    // Function to display collections data
+    function displayCollections(data) {
+      console.log('Displaying collections:', data);
+      const grid = document.getElementById('collectionsGrid');
+      if (!grid) {
+        console.error('Collections grid element not found!');
+        return;
+      }
+      
+      grid.innerHTML = '';
+      
+      if (!data || data.length === 0) {
+        grid.innerHTML = '<p class="no-collections">No collections available at the moment.</p>';
+        return;
+      }
+      
+      data.forEach((item, index) => {
+        const tags = item.tags.join(' ');
+        const card = document.createElement('div');
+        card.className = 'collection-card';
+        card.setAttribute('data-tags', tags);
+        card.setAttribute('data-anim', 'fade-up');
+        card.style.setProperty('--d', `${index * 100 + 200}ms`);
+        
+        card.innerHTML = `
+          <div class="collection-image">
+            <img src="${item.img}" alt="${item.alt}" loading="lazy" onerror="this.src='img/logo/logo.png'">
+            <div class="collection-overlay">
+              <button class="collection-btn">View Details</button>
+            </div>
+          </div>
+          <div class="collection-content">
+            <h3 class="collection-title">${item.title}</h3>
+            <p class="collection-description">${item.desc}</p>
+            <div class="collection-price">${item.price}</div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+      
+      console.log(`Added ${data.length} collection items`);
+      
+      // Initialize filter functionality
+      initCollectionFilters();
+      
+      // Re-initialize animations for new elements
+      if (window.animationObserver) {
+        document.querySelectorAll('.collection-card[data-anim]:not(.in)').forEach(el => {
+          window.animationObserver.observe(el);
+        });
+      }
     }
     
     function initCollectionFilters() {

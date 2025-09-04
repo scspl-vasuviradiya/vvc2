@@ -1014,6 +1014,14 @@ button {
   color: var(--primary-color);
 }
 
+.no-collections {
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: var(--space-12);
+  color: var(--gray-500);
+  font-size: var(--font-size-lg);
+}
+
 /* ===================================
    GALLERY SECTION
    ===================================*/
