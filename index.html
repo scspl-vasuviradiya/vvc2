@@ -856,11 +856,24 @@
     
     // Function to display collections data
     function displayCollections(data) {
+      // Store data globally for filtering
+      window.currentCollectionsData = data;
+      
       const grid = document.getElementById('collectionsGrid');
       if (!grid) {
         console.error('Collections grid element not found!');
         return;
       }
+      
+      // Ensure grid is visible with inline styles - use CSS Grid for better positioning
+      grid.style.cssText = `
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        padding: 20px;
+        justify-items: center;
+        min-height: 100px;
+      `;
       
       grid.innerHTML = '';
       
@@ -872,27 +885,37 @@
       data.forEach((item, index) => {
         const tags = item.tags.join(' ');
         const card = document.createElement('div');
-        card.className = 'collection-card';
-        card.setAttribute('data-tags', tags);
-        card.setAttribute('data-anim', 'fade-up');
-        card.style.setProperty('--d', `${index * 100 + 200}ms`);
         
-        card.innerHTML = `
-          <div class="collection-image">
-            <img src="${item.img}" alt="${item.alt}" loading="lazy" onerror="this.src='img/logo/logo.png'">
-            <div class="collection-overlay">
-              <button class="collection-btn">View Details</button>
-            </div>
-          </div>
-          <div class="collection-content">
-            <h3 class="collection-title">${item.title}</h3>
-            <p class="collection-description">${item.desc}</p>
-            <div class="collection-price">${item.price}</div>
-          </div>
+        // Use inline styles to ensure display - optimized for CSS Grid
+        card.style.cssText = `
+          display: block !important;
+          background: white;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          padding: 16px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          min-height: 200px;
+          width: 100%;
+          max-width: 320px;
+          transition: opacity 0.3s ease, transform 0.3s ease;
         `;
         
-        // Add visible class by default so cards show up on page load
-        card.classList.add('visible');
+        card.setAttribute('data-tags', tags);
+        card.className = 'collection-card visible';
+        
+        // Simple, reliable HTML structure
+        card.innerHTML = `
+          <div style="margin-bottom: 12px;">
+            <img src="${item.img}" alt="${item.alt}" 
+                 style="width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 4px;" 
+                 onerror="this.src='img/logo/logo.png'; this.style.height='100px'; this.style.objectFit='contain';">
+          </div>
+          <div style="padding: 8px 0;">
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #333;">${item.title}</h3>
+            <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${item.desc}</p>
+            <div style="font-weight: bold; color: #8b1538; font-size: 16px;">${item.price}</div>
+          </div>
+        `;
         
         grid.appendChild(card);
       });
@@ -931,6 +954,7 @@
     
     function handleFilterClick(e) {
       const clickedTab = e.currentTarget;
+      const filter = clickedTab.dataset.filter;
       
       // Remove active class from all tabs
       document.querySelectorAll('.filter-tab').forEach(t => {
@@ -942,25 +966,55 @@
       clickedTab.classList.add('active');
       clickedTab.setAttribute('aria-selected', 'true');
       
-      const filter = clickedTab.dataset.filter;
+      const grid = document.getElementById('collectionsGrid');
       
-      // Get fresh collection cards (in case they were re-rendered)
-      const collectionCards = document.querySelectorAll('.collection-card');
-      
-      // Filter collections
-      collectionCards.forEach(card => {
-        const tags = card.dataset.tags ? card.dataset.tags.split(' ') : [];
-        const shouldShow = filter === 'all' || tags.includes(filter);
-        
-        // Remove both classes first
-        card.classList.remove('hidden', 'visible');
-        
-        if (shouldShow) {
-          card.classList.add('visible');
-        } else {
-          card.classList.add('hidden');
-        }
+      // Alternative approach: completely re-render visible cards for perfect positioning
+      const allData = window.currentCollectionsData || [];
+      const filteredData = allData.filter(item => {
+        return filter === 'all' || item.tags.includes(filter);
       });
+      
+      // Clear and re-render only the filtered items
+      grid.innerHTML = '';
+      
+      filteredData.forEach((item, index) => {
+        const tags = item.tags.join(' ');
+        const card = document.createElement('div');
+        
+        // Use inline styles to ensure display - optimized for CSS Grid
+        card.style.cssText = `
+          display: block !important;
+          background: white;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          padding: 16px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          min-height: 200px;
+          width: 100%;
+          max-width: 320px;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+        `;
+        
+        card.setAttribute('data-tags', tags);
+        card.className = 'collection-card visible';
+        
+        // Simple, reliable HTML structure
+        card.innerHTML = `
+          <div style="margin-bottom: 12px;">
+            <img src="${item.img}" alt="${item.alt}" 
+                 style="width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 4px;" 
+                 onerror="this.src='img/logo/logo.png'; this.style.height='100px'; this.style.objectFit='contain';">
+          </div>
+          <div style="padding: 8px 0;">
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #333;">${item.title}</h3>
+            <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${item.desc}</p>
+            <div style="font-weight: bold; color: #8b1538; font-size: 16px;">${item.price}</div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+      
     }
     
     // Smooth scrolling for navigation links
