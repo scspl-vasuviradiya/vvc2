@@ -692,14 +692,31 @@
 
     function handleSelection() {
       var wrappers = document.getElementsByClassName("wrapper");
+      
+      // Remove all positioning classes
       for (var i = 0; i < wrappers.length; i++) {
-        wrappers[i].classList.remove("selected", "first-wrap", "last-wrap");
+        wrappers[i].classList.remove("selected", "prev", "next", "first-wrap", "last-wrap");
       }
+      
+      // Add selected class to current image
       wrappers[selected].classList.add("selected");
-      if (selected === wrappers.length - 1) {
-        wrappers[0].classList.add("first-wrap");
-      } else if (selected === 0) {
-        wrappers[wrappers.length - 1].classList.add("last-wrap");
+      
+      // Add prev class to previous image
+      var prevIndex = selected - 1;
+      if (prevIndex < 0) {
+        prevIndex = wrappers.length - 1;
+        wrappers[prevIndex].classList.add("last-wrap");
+      } else {
+        wrappers[prevIndex].classList.add("prev");
+      }
+      
+      // Add next class to next image
+      var nextIndex = selected + 1;
+      if (nextIndex >= wrappers.length) {
+        nextIndex = 0;
+        wrappers[nextIndex].classList.add("first-wrap");
+      } else {
+        wrappers[nextIndex].classList.add("next");
       }
     }
 

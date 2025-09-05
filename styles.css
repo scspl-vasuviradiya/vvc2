@@ -1708,67 +1708,52 @@ button {
             rgba(19, 19, 19, 0) 50%);
 }
 
-.wrapper:has(+ * + * + .selected) {
-    display: flex;
+/* Hide all wrappers by default */
+.wrapper {
+    display: none;
     position: absolute;
     top: 50%;
-    left: calc(50% - var(--image-size));
-    transform: translate3d(-50%, -50%, 0) scale(0);
-    z-index: 0;
+    transform: translate3d(-50%, -50%, 0);
 }
 
-.wrapper:has(+ * + .selected) {
+/* Center selected image */
+.wrapper.selected {
     display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% - var(--image-size) / 0);
-    transform: translate3d(-50%, -50%, 0) scale(0.8);
-    z-index: 1;
-}
-
-.wrapper:has(+ .selected) {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% - 350px);
-    transform: translate3d(-50%, -50%, 0) scale(0.6);
-    z-index: 2;
-}
-
-.selected {
-    display: flex;
-    position: absolute;
-    top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0) scale(1.0);
     z-index: 3;
 }
 
-.selected+.wrapper {
+/* Previous image (left side) */
+.wrapper.prev {
     display: flex;
-    position: absolute;
-    top: 50%;
+    left: calc(50% - 350px);
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    z-index: 2;
+}
+
+/* Next image (right side) */
+.wrapper.next {
+    display: flex;
     left: calc(50% + 350px);
     transform: translate3d(-50%, -50%, 0) scale(0.6);
     z-index: 2;
 }
 
-.selected+*+.wrapper {
+/* First wrap - acts as next when at the end */
+.wrapper.first-wrap {
     display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + var(--image-size) / 0);
-    transform: translate3d(-50%, -50%, 0) scale(0.8);
-    z-index: 1;
+    left: calc(50% + 350px);
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    z-index: 2;
 }
 
-.selected+*+*+.wrapper {
+/* Last wrap - acts as prev when at the start */
+.wrapper.last-wrap {
     display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + var(--image-size));
-    transform: translate3d(-50%, -50%, 0) scale(0);
-    z-index: 0;
+    left: calc(50% - 350px);
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    z-index: 2;
 }
 
 .arrows {
@@ -1859,25 +1844,6 @@ button {
     font-size: smaller !important;
 }
 
-/* If .selected is at the end, animate first .wrapper as next */
-.wrapper.first-wrap {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: calc(50% + 350px);
-  transform: translate3d(-50%, -50%, 0) scale(0.6);
-  z-index: 2;
-}
-
-/* If .selected is at the start, animate last .wrapper as prev */
-.wrapper.last-wrap {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: calc(50% - 350px);
-  transform: translate3d(-50%, -50%, 0) scale(0.6);
-  z-index: 2;
-}
 
 .theme-switcher_div{
   display: flex;
