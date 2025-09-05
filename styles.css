@@ -1708,24 +1708,6 @@ button {
             rgba(19, 19, 19, 0) 50%);
 }
 
-.wrapper:has(+ * + * + .selected) {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% - var(--image-size));
-    transform: translate3d(-50%, -50%, 0) scale(0);
-    z-index: 0;
-}
-
-.wrapper:has(+ * + .selected) {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% - var(--image-size) / 0);
-    transform: translate3d(-50%, -50%, 0) scale(0.8);
-    z-index: 1;
-}
-
 .wrapper:has(+ .selected) {
     display: flex;
     position: absolute;
@@ -1749,27 +1731,10 @@ button {
     position: absolute;
     top: 50%;
     left: calc(50% + 500px);
-    transform: translate3d(-50%, -50%, 0) scale(0.7);
+    transform: translate3d(-50%, -50%, 0) scale(2.0);
     z-index: 2;
 }
 
-.selected+*+.wrapper {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + var(--image-size) / 0);
-    transform: translate3d(-50%, -50%, 0) scale(0.8);
-    z-index: 1;
-}
-
-.selected+*+*+.wrapper {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + var(--image-size));
-    transform: translate3d(-50%, -50%, 0) scale(0);
-    z-index: 0;
-}
 
 /* If .selected is at the end, animate first .wrapper as next */
 .wrapper.first-wrap {
