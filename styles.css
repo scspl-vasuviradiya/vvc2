@@ -1730,7 +1730,7 @@ button {
     display: flex;
     position: absolute;
     top: 50%;
-    left: calc(50% - var(--image-size) / 1);
+    left: calc(50% - 500px);
     transform: translate3d(-50%, -50%, 0) scale(0.5);
     z-index: 2;
 }
@@ -1748,7 +1748,7 @@ button {
     display: flex;
     position: absolute;
     top: 50%;
-    left: calc(50% + var(--image-size) / 1);
+    left: calc(50% + 500px);
     transform: translate3d(-50%, -50%, 0) scale(0.5);
     z-index: 2;
 }
@@ -1776,7 +1776,7 @@ button {
   display: flex;
   position: absolute;
   top: 50%;
-  left: calc(50% + var(--image-size) / 1);
+  left: calc(50% + 500px);
   transform: translate3d(-50%, -50%, 0) scale(0.5);
   z-index: 2;
 }
@@ -1786,7 +1786,7 @@ button {
   display: flex;
   position: absolute;
   top: 50%;
-  left: calc(50% - var(--image-size) / 1);
+  left: calc(50% - 500px);
   transform: translate3d(-50%, -50%, 0) scale(0.5);
   z-index: 2;
 }
