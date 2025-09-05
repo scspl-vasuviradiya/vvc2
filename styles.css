@@ -1730,7 +1730,7 @@ button {
     display: flex;
     position: absolute;
     top: 50%;
-    left: calc(50% - var(--image-size) * 0.7);
+    left: calc(50% - 350px);
     transform: translate3d(-50%, -50%, 0) scale(0.6);
     z-index: 2;
 }
@@ -1740,7 +1740,7 @@ button {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate3d(-50%, -50%, 0) scale(1);
+    transform: translate3d(-50%, -50%, 0) scale(1.0);
     z-index: 3;
 }
 
@@ -1748,7 +1748,7 @@ button {
     display: flex;
     position: absolute;
     top: 50%;
-    left: calc(50% + var(--image-size) * 0.7);
+    left: calc(50% + 350px);
     transform: translate3d(-50%, -50%, 0) scale(0.6);
     z-index: 2;
 }
@@ -1864,7 +1864,7 @@ button {
   display: flex;
   position: absolute;
   top: 50%;
-  left: calc(50% + var(--image-size) * 0.7);
+  left: calc(50% + 350px);
   transform: translate3d(-50%, -50%, 0) scale(0.6);
   z-index: 2;
 }
@@ -1874,7 +1874,7 @@ button {
   display: flex;
   position: absolute;
   top: 50%;
-  left: calc(50% - var(--image-size) * 0.7);
+  left: calc(50% - 350px);
   transform: translate3d(-50%, -50%, 0) scale(0.6);
   z-index: 2;
 }
