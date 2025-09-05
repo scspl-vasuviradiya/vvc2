@@ -1749,7 +1749,7 @@ button {
     position: absolute;
     top: 50%;
     left: calc(50% + 500px);
-    transform: translate3d(-50%, -50%, 0) scale(0.5);
+    transform: translate3d(-50%, -50%, 0) scale(2.5);
     z-index: 2;
 }
 
