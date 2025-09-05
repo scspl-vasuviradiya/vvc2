@@ -266,59 +266,52 @@
       </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery-section">
-      <div class="container">
-        <div class="section-header" data-anim="fade-up">
-          <span class="section-badge">Gallery</span>
-          <h2 class="section-title">Our Showcase</h2>
-          <p class="section-description">
-            Explore our premium collection through our gallery. See how our outfits look 
-            and get inspired for your special occasion.
-          </p>
-        </div>
-        
-        <!-- Gallery Controls -->
-        <div class="gallery-controls" data-anim="fade-up">
-          <div class="gender-toggle">
-            <span class="toggle-label">Collection:</span>
-            <div class="toggle-switch">
-              <input type="checkbox" id="genderToggle" onchange="checkboxChanged();" />
-              <label for="genderToggle" class="toggle-slider">
-                <span class="toggle-option toggle-male">
-                  <i class="fas fa-male"></i>
-                  <span>Men</span>
+    <!-- Gallery -->
+    <section id="gallery" style="background: burlywood;overflow: hidden;padding: 100px;">
+      <div class="wrap">
+        <div class="gallery_title_div">
+          <div>
+            <h2 class="section-title" data-anim="fade-up" style="--d:120ms">Gallery</h2>
+            <p class="section-sub" data-anim="fade-up" style="--d:120ms">A glimpse of our outfits and boutique ambience.
+            </p>
+          </div>
+          <div class="theme-switcher_div" data-anim="fade-up" style="--d:120ms">
+            <div class="theme-switch">
+              <input type="checkbox" id="theme-checkbox" onchange="checkboxChanged();" />
+              <label for="theme-checkbox">
+                <div></div>
+                <span>
+                  <i class="fa fa-female" aria-hidden="true"></i>
                 </span>
-                <span class="toggle-option toggle-female">
-                  <i class="fas fa-female"></i>
-                  <span>Women</span>
+                <span>
+                  <i class="fa fa-male" aria-hidden="true"></i>
                 </span>
-                <div class="toggle-indicator"></div>
               </label>
+            </div>
+            <div class="container">
+              <i class="fa fa-chevron-left arrow-bounce" aria-hidden="true"></i>
+              <i class="fa fa-chevron-left arrow-bounce" style="opacity: 0.7;" aria-hidden="true"></i>
+              <i class="fa fa-chevron-left arrow-bounce" style="opacity: 0.5;" aria-hidden="true"></i>
             </div>
           </div>
         </div>
-        
-        <!-- Gallery Carousel -->
-        <div class="gallery-carousel" data-anim="fade-up">
-          <div class="gallery-container">
-            <div id="gallerySlider" class="gallery-slider">
-              <!-- Gallery images will be loaded here -->
+
+
+        <div class="gallery">
+          <div id="slider" class="slider">
+          </div>
+          <div class="arrows">
+            <div class="left">
+              <svg viewBox="0 0 512 512" width="100" title="chevron-circle-left">
+                <path
+                  d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z" />
+              </svg>
             </div>
-            
-            <!-- Navigation Arrows -->
-            <div class="gallery-nav">
-              <button class="gallery-nav-btn gallery-prev" id="galleryPrev" aria-label="Previous image">
-                <i class="fas fa-chevron-left"></i>
-              </button>
-              <button class="gallery-nav-btn gallery-next" id="galleryNext" aria-label="Next image">
-                <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-            
-            <!-- Gallery Indicators -->
-            <div class="gallery-indicators" id="galleryIndicators">
-              <!-- Indicators will be generated dynamically -->
+            <div class="right">
+              <svg viewBox="0 0 512 512" width="100" title="chevron-circle-right">
+                <path
+                  d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" />
+                </svg>
             </div>
           </div>
         </div>
@@ -624,456 +617,139 @@
   <script src="animations.js"></script>
   
   <script>
-    // Global variables
-    let galleryImages = [];
-    let maxImages = 0;
-    let currentImageIndex = 0;
-    
-    // DOM elements
-    const gallerySlider = document.getElementById('gallerySlider');
-    const galleryPrev = document.getElementById('galleryPrev');
-    const galleryNext = document.getElementById('galleryNext');
-    const galleryIndicators = document.getElementById('galleryIndicators');
-    const genderToggle = document.getElementById('genderToggle');
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileNav = document.getElementById('mobileNav');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileNavClose = document.getElementById('mobileNavClose');
-    
-    // Mobile menu functionality
-    function initMobileMenu() {
-      mobileMenuBtn?.addEventListener('click', openMobileMenu);
-      mobileNavClose?.addEventListener('click', closeMobileMenu);
-      mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
-      
-      // Close menu when clicking navigation links
-      document.querySelectorAll('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', closeMobileMenu);
-      });
-    }
-    
-    function openMobileMenu() {
-      mobileNav?.classList.add('active');
-      mobileMenuOverlay?.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      mobileMenuBtn?.setAttribute('aria-expanded', 'true');
-    }
-    
-    function closeMobileMenu() {
-      mobileNav?.classList.remove('active');
-      mobileMenuOverlay?.classList.remove('active');
-      document.body.style.overflow = '';
-      mobileMenuBtn?.setAttribute('aria-expanded', 'false');
-    }
-    
-    // Gallery functionality
+    var galleryImages = [];
+    var MAX_IMAGES = 0;
+    var selected = 1;
+    const gallery = document.getElementById("slider");
+    const left = document.getElementsByClassName("left")[0];
+    const right = document.getElementsByClassName("right")[0];
+
     function loadGalleryManifest(callback) {
       fetch('gallery_manifest.json')
         .then(response => response.json())
         .then(data => {
-          const genderType = genderToggle?.checked ? 'Female' : 'Male';
-          maxImages = data[genderType] || 0;
-          callback && callback();
-        })
-        .catch(error => {
-          console.warn('Could not fetch gallery_manifest.json (likely CORS when opening file directly):', error.message);
-          // Set default values when manifest can't be loaded
-          const genderType = genderToggle?.checked ? 'Female' : 'Male';
-          maxImages = genderType === 'Female' ? 10 : 10; // Default to 10 images each
-          callback && callback();
+          let genderType = document.getElementById("theme-checkbox").checked ? "Female" : "Male";
+          MAX_IMAGES = data[genderType] || 0;
+          callback();
         });
     }
-    
+
     function loadGallery() {
-      const genderType = genderToggle?.checked ? 'Female' : 'Male';
+      let genderType = document.getElementById("theme-checkbox").checked ? "Female" : "Male";
       galleryImages = [];
-      
-      for (let i = 1; i <= maxImages; i++) {
-        galleryImages.push(`img/gallery/${genderType}/${i}.jpg`);
+      for (let i = 1; i <= MAX_IMAGES; i++) {
+        const url = `img/gallery/${genderType}/${i}.jpg`;
+        galleryImages.push(url);
       }
-      
-      renderGallery();
-      createGalleryIndicators();
+      init();
     }
-    
-    function renderGallery() {
-      if (!gallerySlider) return;
-      
-      gallerySlider.innerHTML = '';
-      
-      galleryImages.forEach((imageSrc, index) => {
-        const slide = document.createElement('div');
-        slide.className = `gallery-slide ${index === currentImageIndex ? 'active' : ''}`;
-        slide.innerHTML = `
-          <img src="${imageSrc}" alt="Vivah Villa Collection gallery image ${index + 1}" loading="lazy">
-        `;
-        gallerySlider.appendChild(slide);
-      });
-    }
-    
-    function createGalleryIndicators() {
-      if (!galleryIndicators) return;
-      
-      galleryIndicators.innerHTML = '';
-      
-      galleryImages.forEach((_, index) => {
-        const indicator = document.createElement('button');
-        indicator.className = `gallery-indicator ${index === currentImageIndex ? 'active' : ''}`;
-        indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
-        indicator.addEventListener('click', () => goToSlide(index));
-        galleryIndicators.appendChild(indicator);
-      });
-    }
-    
-    function goToSlide(index) {
-      currentImageIndex = index;
-      updateGallery();
-    }
-    
-    function nextSlide() {
-      currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
-      updateGallery();
-    }
-    
-    function prevSlide() {
-      currentImageIndex = currentImageIndex === 0 ? galleryImages.length - 1 : currentImageIndex - 1;
-      updateGallery();
-    }
-    
-    function updateGallery() {
-      // Update slides
-      document.querySelectorAll('.gallery-slide').forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentImageIndex);
-      });
-      
-      // Update indicators
-      document.querySelectorAll('.gallery-indicator').forEach((indicator, index) => {
-        indicator.classList.toggle('active', index === currentImageIndex);
-      });
-    }
-    
+
+    loadGalleryManifest(loadGallery);
+
     function checkboxChanged() {
-      currentImageIndex = 0;
+      gallery.innerHTML = "";
+      galleryImages = [];
+      selected = 1;
       loadGalleryManifest(loadGallery);
     }
-    
-    // Fallback collections data for direct HTML file opening
-    const fallbackCollections = [
-      {
-        "tags": ["men", "indowestern"],
-        "img": "img/collections/men-indowestern-1.jpg",
-        "alt": "Classic Navy Indowestern - Men's tuxedo in navy",
-        "title": "Classic Navy Indowestern",
-        "desc": "Tailored fit • 2-piece",
-        "price": "₹1999/day"
-      },
-      {
-        "tags": ["men", "indowestern"],
-        "img": "img/collections/men-indowestern-3.jpg",
-        "alt": "Classic Navy Indowestern - Men's tuxedo in navy",
-        "title": "Classic Navy Indowestern",
-        "desc": "Tailored fit • 2-piece",
-        "price": "₹1999/day"
-      },
-      {
-        "tags": ["men", "sherwani"],
-        "img": "img/collections/men-sherwani-1.jpg",
-        "alt": "Regal Cream Sherwani - Men's cream sherwani",
-        "title": "Regal Cream Sherwani",
-        "desc": "Zari work • Dupatta",
-        "price": "₹9999/day"
-      },
-      {
-        "tags": ["women", "lehenga"],
-        "img": "img/collections/women-lehenga-1.jpg",
-        "alt": "Elegant Red Lehenga - Bridal lehenga with gold work",
-        "title": "Elegant Red Lehenga",
-        "desc": "Bridal collection • Heavy work",
-        "price": "₹15999/day"
-      },
-      {
-        "tags": ["women", "lehenga"],
-        "img": "img/collections/women-lehenga-2.jpg",
-        "alt": "Pink Designer Lehenga - Contemporary lehenga design",
-        "title": "Pink Designer Lehenga",
-        "desc": "Designer piece • Modern cut",
-        "price": "₹12999/day"
-      },
-      {
-        "tags": ["women", "choli"],
-        "img": "img/collections/women-choli-1.jpg",
-        "alt": "Traditional Choli - Classic Indian choli",
-        "title": "Traditional Choli",
-        "desc": "Traditional design • Comfortable fit",
-        "price": "₹5999/day"
-      },
-      {
-        "tags": ["men", "suit"],
-        "img": "img/collections/men-suit-1.jpg",
-        "alt": "Classic Men's Suit",
-        "title": "Classic Men's Suit",
-        "desc": "Professional look • Perfect fit",
-        "price": "₹2999/day"
-      },
-      {
-        "tags": ["men", "jodhpuri"],
-        "img": "img/collections/men-jodhpuri-1.jpg",
-        "alt": "Traditional Jodhpuri Suit",
-        "title": "Traditional Jodhpuri",
-        "desc": "Royal look • Traditional style",
-        "price": "₹3999/day"
-      },
-      {
-        "tags": ["women", "kurti"],
-        "img": "img/collections/women-kurti-1.jpg",
-        "alt": "Elegant Kurti",
-        "title": "Elegant Kurti",
-        "desc": "Comfortable • Stylish",
-        "price": "₹1999/day"
-      }
-    ];
-    
-    // Collections functionality
-    function loadCollections() {
-      fetch('collections.json')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Collections data loaded from JSON:', data);
-          displayCollections(data);
-        })
-        .catch(error => {
-          console.warn('Could not fetch collections.json (likely CORS when opening file directly), using fallback data:', error.message);
-          // Use fallback data when fetch fails (e.g., when opening HTML directly or CORS issues)
-          console.log('Using fallback collections:', fallbackCollections);
-          displayCollections(fallbackCollections);
-        });
-    }
-    
-    // Function to display collections data
-    function displayCollections(data) {
-      // Store data globally for filtering
-      window.currentCollectionsData = data;
-      
-      const grid = document.getElementById('collectionsGrid');
-      if (!grid) {
-        console.error('Collections grid element not found!');
-        return;
-      }
-      
-      // Ensure grid is visible with inline styles - use CSS Grid for better positioning
-      grid.style.cssText = `
-        display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 24px;
-        padding: 20px;
-        justify-items: center;
-        min-height: 100px;
-      `;
-      
-      grid.innerHTML = '';
-      
-      if (!data || data.length === 0) {
-        grid.innerHTML = '<p class="no-collections">No collections available at the moment.</p>';
-        return;
-      }
-      
-      data.forEach((item, index) => {
-        const tags = item.tags.join(' ');
-        const card = document.createElement('div');
-        
-        // Use inline styles to ensure display - optimized for CSS Grid
-        card.style.cssText = `
-          display: block !important;
-          background: white;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          padding: 16px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-          min-height: 200px;
-          width: 100%;
-          max-width: 320px;
-          transition: opacity 0.3s ease, transform 0.3s ease;
-        `;
-        
-        card.setAttribute('data-tags', tags);
-        card.className = 'collection-card visible';
-        
-        // Simple, reliable HTML structure
-        card.innerHTML = `
-          <div style="margin-bottom: 12px;">
-            <img src="${item.img}" alt="${item.alt}" 
-                 style="width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 4px;" 
-                 onerror="this.src='img/logo/logo.png'; this.style.height='100px'; this.style.objectFit='contain';">
-          </div>
-          <div style="padding: 8px 0;">
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #333;">${item.title}</h3>
-            <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${item.desc}</p>
-            <div style="font-weight: bold; color: #8b1538; font-size: 16px;">${item.price}</div>
-          </div>
-        `;
-        
-        grid.appendChild(card);
-      });
-      
-      console.log(`Loaded ${data.length} collection items`);
-      
-      // Initialize filter functionality with delay to ensure DOM is ready
-      setTimeout(() => {
-        initCollectionFilters();
-      }, 100);
-      
-      // Re-initialize animations for new elements
-      if (window.animationObserver) {
-        document.querySelectorAll('.collection-card[data-anim]:not(.in)').forEach(el => {
-          window.animationObserver.observe(el);
-        });
-      }
-    }
-    
-    function initCollectionFilters() {
-      const filterTabs = document.querySelectorAll('.filter-tab');
-      
-      if (filterTabs.length === 0) {
-        console.warn('No filter tabs found');
-        return;
-      }
-      
-      filterTabs.forEach(tab => {
-        // Remove any existing event listeners
-        tab.removeEventListener('click', handleFilterClick);
-        
-        // Add new event listener
-        tab.addEventListener('click', handleFilterClick);
-      });
-    }
-    
-    function handleFilterClick(e) {
-      const clickedTab = e.currentTarget;
-      const filter = clickedTab.dataset.filter;
-      
-      // Remove active class from all tabs
-      document.querySelectorAll('.filter-tab').forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      
-      // Add active class to clicked tab
-      clickedTab.classList.add('active');
-      clickedTab.setAttribute('aria-selected', 'true');
-      
-      const grid = document.getElementById('collectionsGrid');
-      
-      // Alternative approach: completely re-render visible cards for perfect positioning
-      const allData = window.currentCollectionsData || [];
-      const filteredData = allData.filter(item => {
-        return filter === 'all' || item.tags.includes(filter);
-      });
-      
-      // Clear and re-render only the filtered items
-      grid.innerHTML = '';
-      
-      filteredData.forEach((item, index) => {
-        const tags = item.tags.join(' ');
-        const card = document.createElement('div');
-        
-        // Use inline styles to ensure display - optimized for CSS Grid
-        card.style.cssText = `
-          display: block !important;
-          background: white;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          padding: 16px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-          min-height: 200px;
-          width: 100%;
-          max-width: 320px;
-          transition: opacity 0.3s ease, transform 0.3s ease;
-        `;
-        
-        card.setAttribute('data-tags', tags);
-        card.className = 'collection-card visible';
-        
-        // Simple, reliable HTML structure
-        card.innerHTML = `
-          <div style="margin-bottom: 12px;">
-            <img src="${item.img}" alt="${item.alt}" 
-                 style="width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 4px;" 
-                 onerror="this.src='img/logo/logo.png'; this.style.height='100px'; this.style.objectFit='contain';">
-          </div>
-          <div style="padding: 8px 0;">
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #333;">${item.title}</h3>
-            <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${item.desc}</p>
-            <div style="font-weight: bold; color: #8b1538; font-size: 16px;">${item.price}</div>
-          </div>
-        `;
-        
-        grid.appendChild(card);
-      });
-      
-    }
-    
-    // Smooth scrolling for navigation links
-    function initSmoothScrolling() {
-      document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const targetId = this.getAttribute('href');
-          const targetElement = document.querySelector(targetId);
-          
-          if (targetElement) {
-            const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-            const targetPosition = targetElement.offsetTop - headerHeight - 20;
-            
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-          }
-        });
-      });
-    }
-    
-    // Initialize everything when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      // Update footer year
-      const currentYearSpan = document.getElementById('currentYear');
-      if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-      }
-      
-      // Load collections immediately
-      loadCollections();
-      
-      // Initialize components
-      initMobileMenu();
-      initSmoothScrolling();
-      
-      // Load gallery
-      loadGalleryManifest(loadGallery);
-      
-      
-      // Gallery navigation
-      galleryNext?.addEventListener('click', nextSlide);
-      galleryPrev?.addEventListener('click', prevSlide);
-      
-      // Initialize filters after everything is loaded
-      setTimeout(() => {
-        initCollectionFilters();
-      }, 1000);
-      
-      // Auto-scroll gallery (optional)
-      setInterval(() => {
-        if (galleryImages.length > 1) {
-          nextSlide();
+
+    function init() {
+      gallery.innerHTML = "";
+      var images = galleryImages.length;
+      for (var i = 0; i < galleryImages.length; i++) {
+        var imageWrapper = document.createElement("div");
+        imageWrapper.id = `image_${i}`;
+        imageWrapper.classList.add("wrapper");
+        if (i === selected) {
+          imageWrapper.classList.add("selected");
         }
-      }, 5000); // Change slide every 5 seconds
+        var image = document.createElement("img");
+        image.src = galleryImages[i];
+        image.alt = "Vivah Villa Collection gallery photo " + (i + 1);
+        imageWrapper.appendChild(image);
+        var mirrored = image.cloneNode();
+        mirrored.classList.add("flipped");
+        imageWrapper.appendChild(mirrored);
+        gallery.appendChild(imageWrapper);
+      }
+    }
+
+    right.onclick = function () {
+      selected++;
+      if (selected > galleryImages.length - 1) {
+        selected = 0;
+      }
+      handleSelection();
+    };
+
+    left.onclick = function () {
+      selected--;
+      if (selected < 0) {
+        selected = galleryImages.length - 1;
+      }
+      handleSelection();
+    };
+
+    function handleSelection() {
+      var wrappers = document.getElementsByClassName("wrapper");
+      for (var i = 0; i < wrappers.length; i++) {
+        wrappers[i].classList.remove("selected", "first-wrap", "last-wrap");
+      }
+      wrappers[selected].classList.add("selected");
+      if (selected === wrappers.length - 1) {
+        wrappers[0].classList.add("first-wrap");
+      } else if (selected === 0) {
+        wrappers[wrappers.length - 1].classList.add("last-wrap");
+      }
+    }
+
+    $('#collections').find('img').each(function () {
+      // addImageWatermarkToImgTag(this);
     });
+
+    async function addImageWatermarkToImgTag(imgElement = {}) {
+      const responsiveImg = document.createElement("img");
+      responsiveImg.src = imgElement.src;
+      responsiveImg.alt = imgElement.alt || "";
+      responsiveImg.className = "img";
+      responsiveImg.setAttribute("role", "img");
+
+      return new Promise((resolve, reject) => {
+        const mainImg = new Image();
+        mainImg.crossOrigin = "anonymous";
+        mainImg.onload = function () {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          canvas.width = mainImg.width;
+          canvas.height = mainImg.height;
+          ctx.drawImage(mainImg, 0, 0);
+
+          const watermark = new Image();
+          watermark.crossOrigin = "anonymous";
+          watermark.onload = function () {
+            const wmWidth = mainImg.width * 1;
+            const wmHeight = (watermark.height / watermark.width) * wmWidth;
+            let x = 0, y = 0;
+            ctx.globalAlpha = 0.8;
+            ctx.drawImage(watermark, x, y, wmWidth, wmHeight);
+            ctx.globalAlpha = 1.0;
+
+            const base64 = canvas.toDataURL("image/png");
+            responsiveImg.src = base64;
+            responsiveImg.removeAttribute('srcset');
+            responsiveImg.removeAttribute('sizes');
+            if (imgElement.parentNode) {
+              imgElement.parentNode.replaceChild(responsiveImg, imgElement);
+            }
+            resolve(base64);
+          };
+          watermark.onerror = reject;
+          watermark.src = "img/logo/watermark.png";
+        };
+        mainImg.onerror = reject;
+        mainImg.src = imgElement.src;
+      });
+    }
   </script>
 </body>
 </html>
