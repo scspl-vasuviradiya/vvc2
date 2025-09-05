@@ -1708,52 +1708,87 @@ button {
             rgba(19, 19, 19, 0) 50%);
 }
 
-/* Hide all wrappers by default */
-.wrapper {
-    display: none;
+.wrapper:has(+ * + * + .selected) {
+    display: flex;
     position: absolute;
     top: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    left: calc(50% - var(--image-size));
+    transform: translate3d(-50%, -50%, 0) scale(0);
+    z-index: 0;
 }
 
-/* Center selected image */
-.wrapper.selected {
+.wrapper:has(+ * + .selected) {
     display: flex;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - var(--image-size) / 2);
+    transform: translate3d(-50%, -50%, 0) scale(0.8);
+    z-index: 1;
+}
+
+.wrapper:has(+ .selected) {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - var(--image-size) / 1.5);
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    z-index: 2;
+}
+
+.selected {
+    display: flex;
+    position: absolute;
+    top: 50%;
     left: 50%;
-    transform: translate3d(-50%, -50%, 0) scale(1.0);
+    transform: translate3d(-50%, -50%, 0) scale(1);
     z-index: 3;
 }
 
-/* Previous image (left side) */
-.wrapper.prev {
+.selected+.wrapper {
     display: flex;
-    left: calc(50% - 350px);
+    position: absolute;
+    top: 50%;
+    left: calc(50% + var(--image-size) / 1.5);
     transform: translate3d(-50%, -50%, 0) scale(0.6);
     z-index: 2;
 }
 
-/* Next image (right side) */
-.wrapper.next {
+.selected+*+.wrapper {
     display: flex;
-    left: calc(50% + 350px);
-    transform: translate3d(-50%, -50%, 0) scale(0.6);
-    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + var(--image-size) / 2);
+    transform: translate3d(-50%, -50%, 0) scale(0.8);
+    z-index: 1;
 }
 
-/* First wrap - acts as next when at the end */
+.selected+*+*+.wrapper {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + var(--image-size));
+    transform: translate3d(-50%, -50%, 0) scale(0);
+    z-index: 0;
+}
+
+/* If .selected is at the end, animate first .wrapper as next */
 .wrapper.first-wrap {
-    display: flex;
-    left: calc(50% + 350px);
-    transform: translate3d(-50%, -50%, 0) scale(0.6);
-    z-index: 2;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + var(--image-size) / 1.5);
+  transform: translate3d(-50%, -50%, 0) scale(0.6);
+  z-index: 2;
 }
 
-/* Last wrap - acts as prev when at the start */
+/* If .selected is at the start, animate last .wrapper as prev */
 .wrapper.last-wrap {
-    display: flex;
-    left: calc(50% - 350px);
-    transform: translate3d(-50%, -50%, 0) scale(0.6);
-    z-index: 2;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: calc(50% - var(--image-size) / 1.5);
+  transform: translate3d(-50%, -50%, 0) scale(0.6);
+  z-index: 2;
 }
 
 .arrows {
