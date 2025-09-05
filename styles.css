@@ -1708,15 +1708,37 @@ button {
             rgba(19, 19, 19, 0) 50%);
 }
 
+/* Far left images - hidden */
+.wrapper:has(+ * + * + .selected) {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 1000px);
+    transform: translate3d(-50%, -50%, 0) scale(0);
+    z-index: 0;
+}
+
+/* Second left images - barely visible */
+.wrapper:has(+ * + .selected) {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 750px);
+    transform: translate3d(-50%, -50%, 0) scale(0.3);
+    z-index: 1;
+}
+
+/* Previous image (immediately left of selected) */
 .wrapper:has(+ .selected) {
     display: flex;
     position: absolute;
     top: 50%;
     left: calc(50% - 500px);
-    transform: translate3d(-50%, -50%, 0) scale(0.5);
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
     z-index: 2;
 }
 
+/* Selected center image */
 .selected {
     display: flex;
     position: absolute;
@@ -1726,13 +1748,34 @@ button {
     z-index: 3;
 }
 
+/* Next image (immediately right of selected) */
 .selected+.wrapper {
     display: flex;
     position: absolute;
     top: 50%;
     left: calc(50% + 500px);
-    transform: translate3d(-50%, -50%, 0) scale(2.0);
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
     z-index: 2;
+}
+
+/* Second right images - barely visible */
+.selected+*+.wrapper {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 750px);
+    transform: translate3d(-50%, -50%, 0) scale(0.3);
+    z-index: 1;
+}
+
+/* Far right images - hidden */
+.selected+*+*+.wrapper {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 1000px);
+    transform: translate3d(-50%, -50%, 0) scale(0);
+    z-index: 0;
 }
 
 
@@ -1742,7 +1785,7 @@ button {
   position: absolute;
   top: 50%;
   left: calc(50% + 500px);
-  transform: translate3d(-50%, -50%, 0) scale(0.7);
+  transform: translate3d(-50%, -50%, 0) scale(0.6);
   z-index: 2;
 }
 
@@ -1752,7 +1795,7 @@ button {
   position: absolute;
   top: 50%;
   left: calc(50% - 500px);
-  transform: translate3d(-50%, -50%, 0) scale(0.7);
+  transform: translate3d(-50%, -50%, 0) scale(0.6);
   z-index: 2;
 }
 
