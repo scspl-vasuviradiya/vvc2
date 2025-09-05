@@ -750,6 +750,275 @@
         mainImg.src = imgElement.src;
       });
     }
+
+    // Fallback collections data for direct HTML file opening
+    const fallbackCollections = [
+      {
+        "tags": ["men", "indowestern"],
+        "img": "img/collections/men-indowestern-1.jpg",
+        "alt": "Classic Navy Indowestern - Men's tuxedo in navy",
+        "title": "Classic Navy Indowestern",
+        "desc": "Tailored fit • 2-piece",
+        "price": "₹1999/day"
+      },
+      {
+        "tags": ["men", "indowestern"],
+        "img": "img/collections/men-indowestern-3.jpg",
+        "alt": "Classic Navy Indowestern - Men's tuxedo in navy",
+        "title": "Classic Navy Indowestern",
+        "desc": "Tailored fit • 2-piece",
+        "price": "₹1999/day"
+      },
+      {
+        "tags": ["men", "sherwani"],
+        "img": "img/collections/men-sherwani-1.jpg",
+        "alt": "Regal Cream Sherwani - Men's cream sherwani",
+        "title": "Regal Cream Sherwani",
+        "desc": "Zari work • Dupatta",
+        "price": "₹9999/day"
+      },
+      {
+        "tags": ["women", "lehenga"],
+        "img": "img/collections/women-lehenga-1.jpg",
+        "alt": "Elegant Red Lehenga - Bridal lehenga with gold work",
+        "title": "Elegant Red Lehenga",
+        "desc": "Bridal collection • Heavy work",
+        "price": "₹15999/day"
+      },
+      {
+        "tags": ["women", "lehenga"],
+        "img": "img/collections/women-lehenga-2.jpg",
+        "alt": "Pink Designer Lehenga - Contemporary lehenga design",
+        "title": "Pink Designer Lehenga",
+        "desc": "Designer piece • Modern cut",
+        "price": "₹12999/day"
+      },
+      {
+        "tags": ["women", "choli"],
+        "img": "img/collections/women-choli-1.jpg",
+        "alt": "Traditional Choli - Classic Indian choli",
+        "title": "Traditional Choli",
+        "desc": "Traditional design • Comfortable fit",
+        "price": "₹5999/day"
+      },
+      {
+        "tags": ["men", "suit"],
+        "img": "img/collections/men-suit-1.jpg",
+        "alt": "Classic Men's Suit",
+        "title": "Classic Men's Suit",
+        "desc": "Professional look • Perfect fit",
+        "price": "₹2999/day"
+      },
+      {
+        "tags": ["men", "jodhpuri"],
+        "img": "img/collections/men-jodhpuri-1.jpg",
+        "alt": "Traditional Jodhpuri Suit",
+        "title": "Traditional Jodhpuri",
+        "desc": "Royal look • Traditional style",
+        "price": "₹3999/day"
+      },
+      {
+        "tags": ["women", "kurti"],
+        "img": "img/collections/women-kurti-1.jpg",
+        "alt": "Elegant Kurti",
+        "title": "Elegant Kurti",
+        "desc": "Comfortable • Stylish",
+        "price": "₹1999/day"
+      }
+    ];
+    
+    // Collections functionality
+    function loadCollections() {
+      fetch('collections.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Collections data loaded from JSON:', data);
+          displayCollections(data);
+        })
+        .catch(error => {
+          console.warn('Could not fetch collections.json (likely CORS when opening file directly), using fallback data:', error.message);
+          // Use fallback data when fetch fails (e.g., when opening HTML directly or CORS issues)
+          console.log('Using fallback collections:', fallbackCollections);
+          displayCollections(fallbackCollections);
+        });
+    }
+    
+    // Function to display collections data
+    function displayCollections(data) {
+      // Store data globally for filtering
+      window.currentCollectionsData = data;
+      
+      const grid = document.getElementById('collectionsGrid');
+      if (!grid) {
+        console.error('Collections grid element not found!');
+        return;
+      }
+      
+      // Ensure grid is visible with inline styles - use CSS Grid for better positioning
+      grid.style.cssText = `
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        padding: 20px;
+        justify-items: center;
+        min-height: 100px;
+      `;
+      
+      grid.innerHTML = '';
+      
+      if (!data || data.length === 0) {
+        grid.innerHTML = '<p class="no-collections">No collections available at the moment.</p>';
+        return;
+      }
+      
+      data.forEach((item, index) => {
+        const tags = item.tags.join(' ');
+        const card = document.createElement('div');
+        
+        // Use inline styles to ensure display - optimized for CSS Grid
+        card.style.cssText = `
+          display: block !important;
+          background: white;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          padding: 16px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          min-height: 200px;
+          width: 100%;
+          max-width: 320px;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+        `;
+        
+        card.setAttribute('data-tags', tags);
+        card.className = 'collection-card visible';
+        
+        // Simple, reliable HTML structure
+        card.innerHTML = `
+          <div style="margin-bottom: 12px;">
+            <img src="${item.img}" alt="${item.alt}" 
+                 style="width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 4px;" 
+                 onerror="this.src='img/logo/logo.png'; this.style.height='100px'; this.style.objectFit='contain';">
+          </div>
+          <div style="padding: 8px 0;">
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #333;">${item.title}</h3>
+            <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${item.desc}</p>
+            <div style="font-weight: bold; color: #8b1538; font-size: 16px;">${item.price}</div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+      
+      console.log(`Loaded ${data.length} collection items`);
+      
+      // Initialize filter functionality with delay to ensure DOM is ready
+      setTimeout(() => {
+        initCollectionFilters();
+      }, 100);
+    }
+    
+    function initCollectionFilters() {
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      
+      if (filterTabs.length === 0) {
+        console.warn('No filter tabs found');
+        return;
+      }
+      
+      filterTabs.forEach(tab => {
+        // Remove any existing event listeners
+        tab.removeEventListener('click', handleFilterClick);
+        
+        // Add new event listener
+        tab.addEventListener('click', handleFilterClick);
+      });
+    }
+    
+    function handleFilterClick(e) {
+      const clickedTab = e.currentTarget;
+      const filter = clickedTab.dataset.filter;
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      
+      // Add active class to clicked tab
+      clickedTab.classList.add('active');
+      clickedTab.setAttribute('aria-selected', 'true');
+      
+      const grid = document.getElementById('collectionsGrid');
+      
+      // Alternative approach: completely re-render visible cards for perfect positioning
+      const allData = window.currentCollectionsData || [];
+      const filteredData = allData.filter(item => {
+        return filter === 'all' || item.tags.includes(filter);
+      });
+      
+      // Clear and re-render only the filtered items
+      grid.innerHTML = '';
+      
+      filteredData.forEach((item, index) => {
+        const tags = item.tags.join(' ');
+        const card = document.createElement('div');
+        
+        // Use inline styles to ensure display - optimized for CSS Grid
+        card.style.cssText = `
+          display: block !important;
+          background: white;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          padding: 16px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          min-height: 200px;
+          width: 100%;
+          max-width: 320px;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+        `;
+        
+        card.setAttribute('data-tags', tags);
+        card.className = 'collection-card visible';
+        
+        // Simple, reliable HTML structure
+        card.innerHTML = `
+          <div style="margin-bottom: 12px;">
+            <img src="${item.img}" alt="${item.alt}" 
+                 style="width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 4px;" 
+                 onerror="this.src='img/logo/logo.png'; this.style.height='100px'; this.style.objectFit='contain';">
+          </div>
+          <div style="padding: 8px 0;">
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #333;">${item.title}</h3>
+            <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${item.desc}</p>
+            <div style="font-weight: bold; color: #8b1538; font-size: 16px;">${item.price}</div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    // Initialize collections when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update footer year
+      const currentYearSpan = document.getElementById('currentYear');
+      if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+      }
+      
+      // Load collections immediately
+      loadCollections();
+      
+      // Initialize filters after collections are loaded
+      setTimeout(() => {
+        initCollectionFilters();
+      }, 500);
+    });
   </script>
 </body>
 </html>
