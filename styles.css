@@ -1724,7 +1724,7 @@ button {
     position: absolute;
     top: 50%;
     left: calc(50% - 750px);
-    transform: translate3d(-50%, -50%, 0) scale(0.3);
+    transform: translate3d(-50%, -50%, 0) scale(0);
     z-index: 1;
 }
 
@@ -1734,7 +1734,7 @@ button {
     position: absolute;
     top: 50%;
     left: calc(50% - 500px);
-    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    transform: translate3d(-50%, -50%, 0) scale(0.5);
     z-index: 2;
 }
 
@@ -1754,7 +1754,7 @@ button {
     position: absolute;
     top: 50%;
     left: calc(50% + 500px);
-    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    transform: translate3d(-50%, -50%, 0) scale(2);
     z-index: 2;
 }
 
@@ -1764,7 +1764,7 @@ button {
     position: absolute;
     top: 50%;
     left: calc(50% + 750px);
-    transform: translate3d(-50%, -50%, 0) scale(0.3);
+    transform: translate3d(-50%, -50%, 0) scale(0);
     z-index: 1;
 }
 
