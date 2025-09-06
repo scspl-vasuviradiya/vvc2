@@ -322,10 +322,27 @@ button {
 }
 
 .brand-logo {
-  width: 48px;
-  height: 48px;
+  height: 40px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
   border-radius: var(--radius-lg);
-  object-fit: cover;
+}
+
+/* Responsive logo sizing */
+@media (max-width: 768px) {
+  .brand-logo {
+    height: 32px;
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    height: 28px;
+    max-width: 100px;
+  }
+}
 }
 
 .brand-text {
@@ -488,8 +505,10 @@ button {
 }
 
 .brand-mobile img {
-  width: 32px;
   height: 32px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
   border-radius: var(--radius-base);
 }
 
@@ -685,21 +704,42 @@ button {
   position: relative;
   width: 100%;
   max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-image {
   width: 100%;
-  aspect-ratio: 4/5;
-  background: 
-    linear-gradient(135deg, rgba(139, 21, 56, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%),
-    url('img/gallery/hero.jpg') center/cover no-repeat;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-2xl);
   transition: transform var(--transition-slower);
+  background: linear-gradient(135deg, rgba(139, 21, 56, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%);
 }
 
 .hero-image:hover {
   transform: scale(1.02);
+}
+
+/* Responsive hero image */
+@media (max-width: 768px) {
+  .hero-image {
+    max-height: 400px;
+  }
+  
+  .hero-image-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-image {
+    max-height: 300px;
+    border-radius: var(--radius-xl);
+  }
 }
 
 .hero-stats {
@@ -1524,8 +1564,10 @@ button {
 }
 
 .footer-logo img {
-  width: 48px;
   height: 48px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
   border-radius: var(--radius-lg);
 }
 
@@ -1698,7 +1740,6 @@ button {
     position: absolute;
     bottom: calc(-100% - 10px);
     transform: scaleY(-1);
-    opacity: 0.6;
 }
 
 .wrapper::after {
@@ -1896,7 +1937,7 @@ button {
 /* Larger screens - bigger buttons */
 @media (min-width: 1024px) {
     .gallery-arrows {
-        bottom: -30px;
+        bottom: 30px;
         gap: var(--space-8);
     }
     
