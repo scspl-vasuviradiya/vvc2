@@ -1806,13 +1806,12 @@ button {
 /* Modern Gallery Navigation Arrows */
 .gallery-arrows {
     position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: space-between;
-    padding: 0 var(--space-4);
+    justify-content: center;
+    gap: var(--space-6);
     z-index: 5;
     pointer-events: none;
 }
@@ -1856,10 +1855,11 @@ button {
     font-size: 1.2em;
 }
 
-/* Position arrows outside gallery on larger screens */
+/* Larger screens - bigger buttons */
 @media (min-width: 1024px) {
     .gallery-arrows {
-        padding: 0 -25px;
+        bottom: 30px;
+        gap: var(--space-8);
     }
     
     .gallery-nav-btn {
@@ -1872,7 +1872,8 @@ button {
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .gallery-arrows {
-        padding: 0 var(--space-2);
+        bottom: 15px;
+        gap: var(--space-4);
     }
     
     .gallery-nav-btn {
