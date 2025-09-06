@@ -817,6 +817,9 @@ button {
 .section-title {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: var(--space-4);
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--gray-900);
 }
 
 .section-description {
@@ -1825,76 +1828,50 @@ button {
     fill: #fff;
 }
 
-/* Male / Female Radio */
-.theme-switch {
-  position: relative;
+/* Old theme switch styling removed - using modern design */
+
+
+.gallery_title_div {
   display: flex;
-  justify-content: center;
-  direction: rtl;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-8);
 }
 
-#theme-checkbox {
-  display: none;
-}
-
-#theme-checkbox + label {
-  font-size: 2.6rem;
-    height: 1em;
-    width: 2.5em;
-    border-radius: 1.25em;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #8b1538;
-    position: relative;
-}
-
-#theme-checkbox + label:active {
-  transform: scale(0.85);
-  transition: transform 0.2s;
-}
-
-#theme-checkbox + label div {
-  width: 1em;
-  height: 0.8em;
-  border-radius: inherit;
-  position: absolute;
-  top: 0.1em;
-  left: 0.1em;
-  z-index: 10;
-  transition: 0.5s cubic-bezier(1, 0.33, 0.11, 1.34);
-  background-color: #fff8ee;
-}
-
-#theme-checkbox:checked + label div {
-  left: 1.4em;
-}
-
-#theme-checkbox + label span {
-  display: flex;
-}
-
-#theme-checkbox + label span:first-of-type {
-  color: burlywood;
-}
-
-#theme-checkbox + label span:last-of-type {
-  color: burlywood;
-}
-
-#theme-checkbox + label span .fa {
-    font-size: smaller !important;
-}
-
-
-.theme-switcher_div{
-  display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
+@media (max-width: 768px) {
+  .gallery_title_div {
+    flex-direction: column;
+  }
+  
+  .gallery-controls {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .gender-toggle {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .switch-label {
+    min-width: 180px;
+    height: 45px;
+  }
+  
+  .switch-slider {
+    width: 82px;
+    height: 37px;
+  }
+  
+  #theme-checkbox:checked + .switch-label .switch-slider {
+    transform: translateX(86px);
+  }
+  
+  .switch-option {
+    min-width: 82px;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
 }
 
 /* Direction arrow */
@@ -1989,6 +1966,99 @@ button {
 .section-sub {
   color: #6b7280;
   margin: 0 0 24px;
+}
+
+/* Modern Gallery Controls */
+.gallery-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.gender-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.toggle-label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+/* Modern Theme Switch */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+}
+
+#theme-checkbox {
+  display: none;
+}
+
+.switch-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--gray-100);
+  border-radius: var(--radius-full);
+  padding: var(--space-1);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  border: 2px solid var(--gray-200);
+  min-width: 200px;
+  height: 50px;
+}
+
+.switch-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 92px;
+  height: 42px;
+  background: var(--primary-color);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+#theme-checkbox:checked + .switch-label .switch-slider {
+  transform: translateX(96px);
+}
+
+.switch-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: color var(--transition-base);
+  z-index: 1;
+  position: relative;
+  min-width: 92px;
+}
+
+.switch-option i {
+  font-size: var(--font-size-lg);
+}
+
+.switch-option.women {
+  color: var(--white);
+}
+
+#theme-checkbox:checked + .switch-label .switch-option.women {
+  color: var(--gray-600);
+}
+
+#theme-checkbox:checked + .switch-label .switch-option.men {
+  color: var(--white);
 }
   
   [data-anim] {

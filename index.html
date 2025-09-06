@@ -269,29 +269,33 @@
     <!-- Gallery -->
     <section id="gallery" style="background: burlywood;overflow: hidden;padding: 100px;">
       <div class="wrap">
+        <div class="section-header" data-anim="fade-up">
+          <span class="section-badge">Our Gallery</span>
+          <h2 class="section-title">Wedding Attire Collection</h2>
+          <p class="section-description">
+            Explore our stunning collection of wedding attire and get inspired for your special day. 
+            Browse through men's and women's collections.
+          </p>
+        </div>
+        
         <div class="gallery_title_div">
-          <div>
-            <h2 class="section-title" data-anim="fade-up" style="--d:120ms">Gallery</h2>
-            <p class="section-sub" data-anim="fade-up" style="--d:120ms">A glimpse of our outfits and boutique ambience.
-            </p>
-          </div>
-          <div class="theme-switcher_div" data-anim="fade-up" style="--d:120ms">
-            <div class="theme-switch">
-              <input type="checkbox" id="theme-checkbox" onchange="checkboxChanged();" />
-              <label for="theme-checkbox">
-                <div></div>
-                <span>
-                  <i class="fa fa-female" aria-hidden="true"></i>
-                </span>
-                <span>
-                  <i class="fa fa-male" aria-hidden="true"></i>
-                </span>
-              </label>
-            </div>
-            <div class="container">
-              <i class="fa fa-chevron-left arrow-bounce" aria-hidden="true"></i>
-              <i class="fa fa-chevron-left arrow-bounce" style="opacity: 0.7;" aria-hidden="true"></i>
-              <i class="fa fa-chevron-left arrow-bounce" style="opacity: 0.5;" aria-hidden="true"></i>
+          <div class="gallery-controls" data-anim="fade-up" style="--d:120ms">
+            <div class="gender-toggle">
+              <label class="toggle-label">Toggle Collection:</label>
+              <div class="theme-switch">
+                <input type="checkbox" id="theme-checkbox" onchange="checkboxChanged();" />
+                <label for="theme-checkbox" class="switch-label">
+                  <div class="switch-slider"></div>
+                  <span class="switch-option women">
+                    <i class="fas fa-female" aria-hidden="true"></i>
+                    <span>Women</span>
+                  </span>
+                  <span class="switch-option men">
+                    <i class="fas fa-male" aria-hidden="true"></i>
+                    <span>Men</span>
+                  </span>
+                </label>
+              </div>
             </div>
           </div>
         </div>
