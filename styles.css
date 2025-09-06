@@ -1895,7 +1895,7 @@ button {
 /* Larger screens - bigger buttons */
 @media (min-width: 1024px) {
     .gallery-arrows {
-        bottom: 30px;
+        bottom: -30px;
         gap: var(--space-8);
     }
     
